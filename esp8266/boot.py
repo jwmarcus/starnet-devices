@@ -1,11 +1,8 @@
-import esp # to disable debug output
+import esp # disable debug output for rshell.py
 esp.osdebug(None)
 
-import device_config # user module
-import gc
-import webrepl
-import network
-import temp_sense
+import device_config # contains sensitive data
+import gc, webrepl, network
 
 def write_repl_config(config):
     contents = "PASS = '{}'\n".format(config.repl)
@@ -20,13 +17,17 @@ def connect(config):
         sta_if.connect(config.ssid, config.psk)
         while not sta_if.isconnected():
             pass
-    print('network config:', sta_if.ifconfig())
+    print('INFO: Network - ', sta_if.ifconfig())
 
-# init tasks
+# collect garbage
+gc.collect()
+
+# setup and start webrepl
 write_repl_config(device_config)
 webrepl.start()
-gc.collect()
-connect(device_config)
 
-temps = temp_sense.get_temps()
-print(temps)
+# connect to wifi in device_config.py
+# TODO: don't block boot sequence
+# connect(device_config)
+
+# NOTE: from here, the main.py script activates
