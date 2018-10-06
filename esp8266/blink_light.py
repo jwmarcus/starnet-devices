@@ -1,5 +1,6 @@
 import machine
 import neopixel
+import time
 
 PIN_NUM   = 4
 STRIP_LEN = 1

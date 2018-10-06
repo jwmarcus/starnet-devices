@@ -28,6 +28,6 @@ webrepl.start()
 
 # connect to wifi in device_config.py
 # TODO: don't block boot sequence
-# connect(device_config)
+connect(device_config)
 
 # NOTE: from here, the main.py script activates
